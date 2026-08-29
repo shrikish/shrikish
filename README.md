@@ -184,22 +184,6 @@ Engineering Excellence 🚀
 
 ---
 
-## 📊 GitHub Analytics
-
-## 📊 GitHub Analytics
-
-<div align="center">
-
-<img height="170" src="./profile/stats.svg" alt="GitHub Statistics" />
-
-<img height="170" src="./profile/top-langs.svg" alt="Most Used Languages" />
-
-</div>
-
-
-
----
-
 ## 🌱 Currently Learning & Exploring
 
 ```mermaid
