@@ -1,15 +1,80 @@
+<svg width="520" height="220"
+viewBox="0 0 520 220"
+xmlns="http://www.w3.org/2000/svg">
 
-    <svg width="576.5"  height="120" viewBox="0 0 576.5 120" fill="#1a1b27" xmlns="http://www.w3.org/2000/svg">
-    <style>
-    .text { font: 600 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: #70a5fd }
-    .small { font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #38bdae }
-    .gray { fill: #858585 }
-    </style>
-    <rect x="0.5" y="0.5" width="575.5" height="99%" rx="4.5" fill="#1a1b27" stroke="#e4e2e2"/>
-    <text x="25" y="45" class="text">Something went wrong! file an issue at https://tiny.one/readme-stats</text>
-    <text data-testid="message" x="25" y="55" class="text small">
-      <tspan x="25" dy="18">Resource not accessible by integration</tspan>
-      <tspan x="25" dy="18" class="gray">OK</tspan>
-    </text>
-    </svg>
-  
+<rect width="520" height="220" rx="12"
+      fill="#1a1b27"/>
+
+<text x="30" y="42"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="20"
+      font-weight="600"
+      fill="#70a5fd">
+  GitHub Statistics
+</text>
+
+<text x="30" y="82"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="15"
+      fill="#c9d1d9">
+  Public Repositories
+</text>
+
+<text x="470" y="82"
+      text-anchor="end"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#38bdae">
+  4
+</text>
+
+<text x="30" y="115"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="15"
+      fill="#c9d1d9">
+  Stars Earned
+</text>
+
+<text x="470" y="115"
+      text-anchor="end"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#38bdae">
+  0
+</text>
+
+<text x="30" y="148"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="15"
+      fill="#c9d1d9">
+  Followers
+</text>
+
+<text x="470" y="148"
+      text-anchor="end"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#38bdae">
+  0
+</text>
+
+<text x="30" y="181"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="15"
+      fill="#c9d1d9">
+  Forks
+</text>
+
+<text x="470" y="181"
+      text-anchor="end"
+      font-family="Segoe UI, Ubuntu, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#38bdae">
+  0
+</text>
+
+</svg>
