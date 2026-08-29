@@ -16,29 +16,147 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate GitHub statistics
-        uses: readme-tools/github-readme-stats-action@v1
-        with:
-          card: stats
-          options: "username=shrikish&show_icons=true&theme=tokyonight&hide_border=true"
-          path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate profile statistics
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p profile
 
-      - name: Generate top languages
-        uses: readme-tools/github-readme-stats-action@v1
-        with:
-          card: top-langs
-          options: "username=shrikish&layout=compact&theme=tokyonight&hide_border=true"
-          path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          python3 <<'PY'
+          import os
+          import json
+          import urllib.request
 
-      - name: Commit updated statistics
+          username = "shrikish"
+          token = os.environ["GH_TOKEN"]
+
+          def github_api(url):
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "Accept": "application/vnd.github+json"
+                  }
+              )
+              with urllib.request.urlopen(req) as response:
+                  return json.load(response)
+
+          user = github_api(f"https://api.github.com/users/{username}")
+          repos = github_api(
+              f"https://api.github.com/users/{username}/repos?per_page=100"
+          )
+
+          public_repos = user.get("public_repos", 0)
+          followers = user.get("followers", 0)
+          following = user.get("following", 0)
+
+          stars = sum(
+              repo.get("stargazers_count", 0)
+              for repo in repos
+          )
+
+          forks = sum(
+              repo.get("forks_count", 0)
+              for repo in repos
+          )
+
+          svg = f'''<svg width="520" height="220"
+          viewBox="0 0 520 220"
+          xmlns="http://www.w3.org/2000/svg">
+
+          <rect width="520" height="220" rx="12"
+                fill="#1a1b27"/>
+
+          <text x="30" y="42"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="20"
+                font-weight="600"
+                fill="#70a5fd">
+            GitHub Statistics
+          </text>
+
+          <text x="30" y="82"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="15"
+                fill="#c9d1d9">
+            Public Repositories
+          </text>
+
+          <text x="470" y="82"
+                text-anchor="end"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="15"
+                font-weight="600"
+                fill="#38bdae">
+            {public_repos}
+          </text>
+
+          <text x="30" y="115"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="15"
+                fill="#c9d1d9">
+            Stars Earned
+          </text>
+
+          <text x="470" y="115"
+                text-anchor="end"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="15"
+                font-weight="600"
+                fill="#38bdae">
+            {stars}
+          </text>
+
+          <text x="30" y="148"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="15"
+                fill="#c9d1d9">
+            Followers
+          </text>
+
+          <text x="470" y="148"
+                text-anchor="end"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="15"
+                font-weight="600"
+                fill="#38bdae">
+            {followers}
+          </text>
+
+          <text x="30" y="181"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="15"
+                fill="#c9d1d9">
+            Forks
+          </text>
+
+          <text x="470" y="181"
+                text-anchor="end"
+                font-family="Segoe UI, Ubuntu, sans-serif"
+                font-size="15"
+                font-weight="600"
+                fill="#38bdae">
+            {forks}
+          </text>
+
+          </svg>'''
+
+          with open("profile/stats.svg", "w") as f:
+              f.write(svg)
+
+          print("GitHub statistics generated successfully.")
+          PY
+
+      - name: Commit statistics
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile/*.svg
+
+          git add profile/stats.svg
 
           if ! git diff --cached --quiet; then
             git commit -m "chore: update GitHub profile statistics"
             git push
+          else
+            echo "No changes to commit."
           fi
